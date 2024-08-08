@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_08_065956) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_08_110640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,59 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_08_065956) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "brands", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "catalogue_variant_colors", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "catalogue_variant_sizes", force: :cascade do |t|
+    t.string "name"
+    t.string "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "catalogue_variants", force: :cascade do |t|
+    t.integer "catalogue_id"
+    t.integer "catalogue_variant_color_id"
+    t.integer "catalogue_variant_size_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "catalogues", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.integer "category_id"
+    t.integer "sub_category_id"
+    t.integer "brand_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories_sub_categories", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "sub_category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_categories_sub_categories_on_category_id"
+    t.index ["sub_category_id"], name: "index_categories_sub_categories_on_sub_category_id"
+  end
+
   create_table "email_opts", force: :cascade do |t|
     t.string "email"
     t.datetime "valid_until"
@@ -67,4 +120,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_08_065956) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sub_categories", force: :cascade do |t|
+    t.string "name"
+    t.bigint "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_sub_categories_on_category_id"
+  end
+
+  add_foreign_key "categories_sub_categories", "categories"
+  add_foreign_key "categories_sub_categories", "sub_categories"
+  add_foreign_key "sub_categories", "categories"
 end
