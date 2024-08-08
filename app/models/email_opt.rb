@@ -1,0 +1,2 @@
+class EmailOpt < ApplicationRecord
+end
