@@ -3,12 +3,12 @@ ActiveAdmin.register Category do
 
   form do |f|
     f.inputs 'Category Details' do
-      f.input :name, hint: "Enter the name of the category."
+      f.input :name, placeholder: "Enter the name of the category."
     end
 
     f.inputs 'SubCategories' do
       f.has_many :sub_categories, allow_destroy: true, new_record: true do |sub_f|
-        sub_f.input :name, hint: "Enter the name of the subcategory."
+        sub_f.input :name, placeholder: "Enter the name of the subcategory."
       end
     end
 
