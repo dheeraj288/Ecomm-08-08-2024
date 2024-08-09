@@ -22,3 +22,24 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+Categories can be added by admin.
+
+Main categories are: Watches, bags, jewelry, accessories, and footwear
+
+Each category will be divided by sub categories for Male, Female, and Unisex
+
+Each sub category will be divided by brands which will be added by admin
+
+ category ->
+
+subcategory
+
+catalogues
+
+catalogue variants
+
+catalogue_variant_colors
+
+catalogue variant sizes
