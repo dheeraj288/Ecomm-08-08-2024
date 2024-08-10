@@ -74,5 +74,3 @@ gem "sassc", "~> 2.4"
 
 gem 'bcrypt'
 gem 'jwt'
-gem 'twilio-ruby'
-gem 'mailgun-ruby'
