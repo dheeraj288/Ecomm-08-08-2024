@@ -1,6 +1,7 @@
 module Api
   module V1
     class CatalogueVariantsController < ApplicationController
+    	
       def index
         catalogue_variants = CatalogueVariant.includes(:catalogue_variant_color, :catalogue_variant_size).all
         render json: catalogue_variants, status: :ok

@@ -20,7 +20,6 @@
 # CatalogueVariantColor.destroy_all
 # CatalogueVariantSize.destroy_all
 
-# Create some categories, subcategories, and brands
 
 category = Category.create!(name: 'Watches')
 sub_category = SubCategory.create!(name: 'Smart Watches', category: category)
