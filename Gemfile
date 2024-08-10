@@ -71,3 +71,8 @@ gem "activeadmin", "~> 3.2"
 gem "devise", "~> 4.9"
 
 gem "sassc", "~> 2.4"
+
+gem 'bcrypt'
+gem 'jwt'
+gem 'twilio-ruby'
+gem 'mailgun-ruby'
