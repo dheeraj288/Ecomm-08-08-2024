@@ -4,9 +4,20 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :categories do
+      post 'signup', to: 'accounts#signup'
+      post 'login', to: 'accounts#login'
+      post 'send_email_otp', to: 'accounts#send_email_otp'
+      post 'send_sms_otp', to: 'accounts#send_sms_otp'
+      get 'account', to: "accounts#index"
+        resources :categories do
         resources :sub_categories, only: [:index, :show, :create, :update, :destroy]
+        resource :wallet, only: [:show] do
+        member do
+          post 'add_funds'   # Route for adding funds to the wallet
+          post 'spend_funds' # Route for spending funds from the wallet
+        end
       end
+  end
 
       resources :catalogues do
         resources :catalogue_variants, only: [:index, :create]
@@ -17,6 +28,9 @@ Rails.application.routes.draw do
       resources :catalogue_variants, only: [:index, :show, :update, :destroy]
 
       resources :brands, only: [:index, :show, :create, :update, :destroy]
+
+      resources :checkouts, only: [:create]
+
     end
   end
 end

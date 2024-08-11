@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_10_114037) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_11_083513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_10_114037) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
+    t.string "password_digest"
   end
 
   create_table "active_admin_comments", force: :cascade do |t|
@@ -96,13 +97,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_10_114037) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "email_opts", force: :cascade do |t|
+  create_table "email_otps", force: :cascade do |t|
     t.string "email"
     t.datetime "valid_until"
     t.boolean "activated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "otp"
+    t.bigint "account_id", null: false
+    t.index ["account_id"], name: "index_email_otps_on_account_id"
   end
 
   create_table "sms_otps", force: :cascade do |t|
@@ -112,6 +115,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_10_114037) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "otp"
+    t.bigint "account_id", null: false
+    t.index ["account_id"], name: "index_sms_otps_on_account_id"
   end
 
   create_table "sub_categories", force: :cascade do |t|
@@ -122,5 +127,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_10_114037) do
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "wallet_id", null: false
+    t.bigint "catalogue_variant_id", null: false
+    t.decimal "amount", precision: 10, scale: 2
+    t.string "transaction_type"
+    t.string "status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["catalogue_variant_id"], name: "index_transactions_on_catalogue_variant_id"
+    t.index ["wallet_id"], name: "index_transactions_on_wallet_id"
+  end
+
+  create_table "wallets", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_wallets_on_account_id"
+  end
+
+  add_foreign_key "email_otps", "accounts"
+  add_foreign_key "sms_otps", "accounts"
   add_foreign_key "sub_categories", "categories"
+  add_foreign_key "transactions", "catalogue_variants"
+  add_foreign_key "transactions", "wallets"
+  add_foreign_key "wallets", "accounts"
 end

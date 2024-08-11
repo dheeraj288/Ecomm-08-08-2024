@@ -1,0 +1,2 @@
+class EmailAccount < Account
+end

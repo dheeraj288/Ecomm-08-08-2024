@@ -1,6 +1,13 @@
 ActiveAdmin.register Category do
   permit_params :name, sub_categories_attributes: [:id, :name, :category_id, :_destroy]
 
+  # Eager-load associations to prevent N+1 queries
+  controller do
+    def scoped_collection
+      super.includes(:sub_categories)
+    end
+  end
+
   form do |f|
     f.inputs 'Category Details' do
       f.input :name, placeholder: "Enter the name of the category."
@@ -20,7 +27,7 @@ ActiveAdmin.register Category do
     id_column
     column :name
     column "SubCategories Count" do |category|
-      category.sub_categories.count
+      category.sub_categories.size
     end
     column :created_at
     column :updated_at
@@ -35,10 +42,10 @@ ActiveAdmin.register Category do
     end
 
     panel "SubCategories" do
-      table_for category.sub_categories do
+      table_for category.sub_categories.includes(:catalogues) do
         column :name
         column "Catalogues Count" do |sub_category|
-          sub_category.catalogues.count
+          sub_category.catalogues.size 
         end
         column :created_at
       end

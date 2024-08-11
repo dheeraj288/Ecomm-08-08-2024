@@ -72,5 +72,9 @@ gem "devise", "~> 4.9"
 
 gem "sassc", "~> 2.4"
 
-gem 'bcrypt'
 gem 'jwt'
+gem 'bcrypt'
+gem 'twilio-ruby' # For SMS OTP
+gem 'mailgun-ruby' # For Email OTP
+
+gem "faker", "~> 3.4"

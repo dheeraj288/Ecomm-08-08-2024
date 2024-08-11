@@ -1,6 +1,6 @@
-class CreateEmailOpts < ActiveRecord::Migration[7.1]
+class CreateEmailOtps < ActiveRecord::Migration[7.1]
   def change
-    create_table :email_opts do |t|
+    create_table :email_otps do |t|
       t.string :email
       t.datetime :valid_until
       t.boolean :activated

@@ -1,0 +1,2 @@
+class SmsAccount < Account
+end

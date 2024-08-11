@@ -7,50 +7,74 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
-
-# db/seeds.rb
-
-# Clear existing data
-# CatalogueVariant.destroy_all
-# Catalogue.destroy_all
-# SubCategory.destroy_all
-# Category.destroy_all
-# Brand.destroy_all
-# CatalogueVariantColor.destroy_all
-# CatalogueVariantSize.destroy_all
+ AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 
-category = Category.create!(name: 'Watches')
-sub_category = SubCategory.create!(name: 'Smart Watches', category: category)
-brand = Brand.create!(name: 'Apple')
 
-# Create some variant colors and sizes
-color1 = CatalogueVariantColor.create!(name: 'Black')
-color2 = CatalogueVariantColor.create!(name: 'White')
-size1 = CatalogueVariantSize.create!(name: 'Small')
-size2 = CatalogueVariantSize.create!(name: 'Large')
+5.times do
+  Brand.create!(
+    name: Faker::Company.name
+  )
+end
 
-# Create some catalogues with variants
-catalogue1 = Catalogue.create!(
-  name: 'Apple Watch Series 7',
-  description: 'Latest Apple Watch with advanced features',
-  category: category,
-  sub_category: sub_category,
-  brand: brand,
-  catalogue_variants_attributes: [
-    { catalogue_variant_color_id: color1.id, catalogue_variant_size_id: size1.id },
-    { catalogue_variant_color_id: color2.id, catalogue_variant_size_id: size2.id }
-  ]
-)
+5.times do
+  category = Category.create!(
+    name: Faker::Commerce.department
+  )
+  
+  3.times do
+    SubCategory.create!(
+      name: Faker::Commerce.material,
+      category_id: category.id
+    )
+  end
+end
 
-catalogue2 = Catalogue.create!(
-  name: 'Apple Watch SE',
-  description: 'Affordable Apple Watch with essential features',
-  category: category,
-  sub_category: sub_category,
-  brand: brand,
-  catalogue_variants_attributes: [
-    { catalogue_variant_color_id: color1.id, catalogue_variant_size_id: size2.id }
-  ]
-)
+10.times do
+  Catalogue.create!(
+    name: Faker::Commerce.product_name,
+    description: Faker::Lorem.sentence,
+    category_id: Category.pluck(:id).sample,
+    sub_category_id: SubCategory.pluck(:id).sample,
+    brand_id: Brand.pluck(:id).sample
+  )
+end
+
+5.times do
+  color = CatalogueVariantColor.create!(
+    name: Faker::Color.color_name,
+    color: Faker::Color.hex_color
+  )
+  
+  size = CatalogueVariantSize.create!(
+    name: ["Small", "Medium", "Large", "Extra Large"].sample,
+    size: ["S", "M", "L", "XL"].sample
+  )
+  
+  10.times do
+    CatalogueVariant.create!(
+      catalogue_id: Catalogue.pluck(:id).sample,
+      catalogue_variant_color_id: color.id,
+      catalogue_variant_size_id: size.id
+    )
+  end
+end
+
+Account.all.each do |account|
+  wallet = Wallet.create!(
+    account_id: account.id,
+    balance: Faker::Commerce.price(range: 100.0..1000.0)
+  )
+
+  5.times do
+    Transaction.create!(
+      wallet_id: wallet.id,
+      catalogue_variant_id: CatalogueVariant.pluck(:id).sample,
+      amount: Faker::Commerce.price(range: 10.0..100.0),
+      transaction_type: ["debit", "credit"].sample,
+      status: ["pending", "completed", "failed"].sample
+    )
+  end
+end
+
+puts "Seeding completed!"
