@@ -6,6 +6,8 @@ class Account < ApplicationRecord
   has_one :wallet, dependent: :destroy
   after_create :create_wallet
 
+  validates :full_phone_number, presence: true
+
   after_create :send_otp
 
 	def send_otp
@@ -14,7 +16,7 @@ class Account < ApplicationRecord
 			email_otp.save
 
 		elsif type == "SmsAccount"
-			sms_otp = SmsOtp.new(phone_no: phone_number)
+			sms_otp = SmsOtp.new(full_phone_number: full_phone_number)
 			sms_otp.save
 		end 
 	end
