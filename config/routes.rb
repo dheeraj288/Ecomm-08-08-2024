@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         resource :wallet, only: [:show] do
         member do
           post 'add_funds'   
-          post 'spend_funds' 
+          post 'spend_funds' # Route for spending funds from the wallet
         end
       end
   end

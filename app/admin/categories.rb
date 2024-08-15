@@ -27,7 +27,7 @@ ActiveAdmin.register Category do
     id_column
     column :name
     column "SubCategories Count" do |category|
-      category.sub_categories.size
+      category.sub_categories.size # Use size to avoid extra queries
     end
     column :created_at
     column :updated_at

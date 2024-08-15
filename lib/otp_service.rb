@@ -1,4 +1,3 @@
-# app/services/otp_service.rb
 class OtpService
   def self.send_email_otp(account)
     otp = rand(100000..999999).to_s

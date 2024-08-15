@@ -10,8 +10,8 @@ ActiveAdmin.register Transaction do
 
   form do |f|
     f.inputs 'Transaction Details' do
-      f.input :wallet
-      f.input :catalogue_variant
+      f.input :wallet,as: :select, collection: Transaction.pluck(:amount, :id)
+      f.input :catalogue_variant, as: :select, collection: Catalogue.pluck(:name, :id)
       f.input :amount
       f.input :transaction_type
       f.input :status

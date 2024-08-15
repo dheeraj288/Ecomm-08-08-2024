@@ -15,6 +15,11 @@ ActiveAdmin.register Catalogue do
       f.input :brand_id, as: :select, collection: Brand.pluck(:name, :id)
     end
 
+    f.has_many :catalogue_variants, allow_destroy: true, new_record: true do |variant|
+      variant.input :catalogue_variant_color_id, as: :select, collection: CatalogueVariantColor.pluck(:name, :id)
+      variant.input :catalogue_variant_size_id, as: :select, collection: CatalogueVariantSize.pluck(:name, :id)
+    end
+
 
     f.actions
   end
@@ -24,15 +29,15 @@ ActiveAdmin.register Catalogue do
     id_column
     column :name
     column :description
-    column :category_id
-    column :sub_category_id
-    column :brand_id
+    column("Category") { |catalogue| catalogue.category.name }
+    column("Sub Category") { |catalogue| catalogue.sub_category.name }
+    column("Brand") { |catalogue| catalogue.brand.name }
     actions
   end
 
   filter :name
   filter :description
-  filter :category_id
-  filter :sub_category_id
-  filter :brand_id
+  filter :category, as: :select, collection: Category.pluck(:name, :id)
+  filter :sub_category, as: :select, collection: SubCategory.pluck(:name, :id)
+  filter :brand, as: :select, collection: Brand.pluck(:name, :id)
 end

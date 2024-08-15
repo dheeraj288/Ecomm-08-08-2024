@@ -2,6 +2,8 @@ class CatalogueVariant < ApplicationRecord
   belongs_to :catalogue
   belongs_to :catalogue_variant_color
   belongs_to :catalogue_variant_size
+  accepts_nested_attributes_for :catalogue_variant_color, allow_destroy: true
+  accepts_nested_attributes_for :catalogue_variant_size, allow_destroy: true
 
   
   def self.ransackable_attributes(auth_object = nil)

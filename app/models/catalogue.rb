@@ -3,9 +3,7 @@ class Catalogue < ApplicationRecord
   belongs_to :sub_category
   belongs_to :brand
   has_many :catalogue_variants, dependent: :destroy
-
-    accepts_nested_attributes_for :catalogue_variants
-
+  accepts_nested_attributes_for :catalogue_variants, allow_destroy: true
 
   def self.ransackable_associations(auth_object = nil)
     ["brand", "catalogue_variants", "category", "sub_category"]

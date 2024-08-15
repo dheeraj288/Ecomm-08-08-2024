@@ -7,6 +7,15 @@ ActiveAdmin.register Wallet do
     end
   end
 
+  form do |f|
+    f.inputs 'Wallet Details' do
+      f.input :account_id, as: :select, collection: Account.pluck(:email, :id)
+      f.input :balance
+    end
+
+    f.actions
+  end
+
   show do
     attributes_table do
       row :id

@@ -78,3 +78,8 @@ gem 'twilio-ruby' # For SMS OTP
 gem 'mailgun-ruby' # For Email OTP
 
 gem "faker", "~> 3.4"
+
+
+gem "pagy"
+gem "pry"
+gem "uri", "~> 0.13.0"

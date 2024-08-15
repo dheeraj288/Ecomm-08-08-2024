@@ -1,11 +1,16 @@
 module Api
   module V1
     class CategoriesController < ApplicationController
+      include Pagy::Backend
+
       before_action :set_category, only: [:show, :update, :destroy]
 
       def index
-        categories = Category.includes(:sub_categories).all
-        render json: categories.as_json(include: :sub_categories), status: :ok
+        pagy, categories = pagy(Category.includes(:sub_categories).all)
+        render json: {
+          categories: categories.as_json(include: :sub_categories),
+          
+        }, status: :ok
       end
 
       def show
