@@ -66,20 +66,27 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "activeadmin", "~> 3.2"
+gem "activeadmin"
 
-gem "devise", "~> 4.9"
+gem "devise"
 
-gem "sassc", "~> 2.4"
-
+gem "sassc"
 gem 'jwt'
 gem 'bcrypt'
 gem 'twilio-ruby' # For SMS OTP
 gem 'mailgun-ruby' # For Email OTP
 
-gem "faker", "~> 3.4"
+gem "faker"
 
 
 gem "pagy"
 gem "pry"
-gem "uri", "~> 0.13.0"
+
+#active admin additianal gem 
+
+gem 'active_admin_role'
+gem 'activeadmin_json_editor'
+gem 'active_admin_datetimepicker'
+gem 'arctic_admin'
+gem 'activeadmin-searchable_select'
+gem 'activeadmin_addons'
