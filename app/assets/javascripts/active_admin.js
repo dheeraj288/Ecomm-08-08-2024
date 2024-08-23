@@ -1,5 +1,6 @@
-//= require active_admin/base
-
+//= require arctic_admin/base
+import "@fortawesome/fontawesome-free/css/all.css";
+import 'arctic_admin'
 
 $(document).ready(function() {
   // Add toggle functionality for password input
