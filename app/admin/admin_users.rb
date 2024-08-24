@@ -19,9 +19,10 @@ ActiveAdmin.register AdminUser do
   form do |f|
     f.inputs do
       f.input :email
-      f.input :password, as: :password, input_html: { id: 'password_input' }
-      f.input :password_confirmation, as: :password, input_html: { id: 'password_confirmation_input' }
+      f.input :password
+      f.input :password_confirmation
     end
     f.actions
   end
+
 end
