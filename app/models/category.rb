@@ -3,6 +3,8 @@ class Category < ApplicationRecord
   accepts_nested_attributes_for :sub_categories, allow_destroy: true, reject_if: :all_blank
 
   validates :name, presence: true
+
+  validates :name, presence: true
 	def self.ransackable_attributes(auth_object = nil)
     ["created_at", "id", "id_value", "name", "updated_at"]
   end

@@ -1,4 +1,5 @@
 class Account < ApplicationRecord
+	self.inheritance_column = :_type_disabled 
   has_secure_password
   has_many :email_otps
   has_many :sms_otps

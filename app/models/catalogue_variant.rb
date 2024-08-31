@@ -5,6 +5,9 @@ class CatalogueVariant < ApplicationRecord
   accepts_nested_attributes_for :catalogue_variant_color, allow_destroy: true
   accepts_nested_attributes_for :catalogue_variant_size, allow_destroy: true
 
+  validates :name, presence: true
+  validates :price, presence: true
+
   
   def self.ransackable_attributes(auth_object = nil)
     ["catalogue_id", "catalogue_variant_color_id", "catalogue_variant_size_id", "created_at", "id", "id_value", "updated_at"]

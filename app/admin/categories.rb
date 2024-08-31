@@ -1,13 +1,6 @@
 ActiveAdmin.register Category do
   permit_params :name, sub_categories_attributes: [:id, :name, :category_id, :_destroy]
 
-  # Eager-load associations to prevent N+1 queries
-  controller do
-    def scoped_collection
-      super.includes(:sub_categories)
-    end
-  end
-
   form do |f|
     f.inputs 'Category Details' do
       f.input :name, placeholder: "Enter the name of the category."
