@@ -1,5 +1,5 @@
 class Api::V1::AccountsController < ApplicationController
-  before_action :authorize_request, except: [:signup, :send_email_otp, :send_sms_otp, :login]
+  before_action :authorize_request, except: [:signup, :send_sms_otp, :login]
 
   def index
     @accounts = Account.all
@@ -19,21 +19,21 @@ class Api::V1::AccountsController < ApplicationController
     end
   end
 
-  def send_email_otp
-    email_otp_params = params.require(:email_otp).permit(:email)
-    @account = Account.find_by(email: email_otp_params[:email])
+  # def send_email_otp
+  #   email_otp_params = params.require(:email_otp).permit(:email)
+  #   @account = Account.find_by(email: email_otp_params[:email])
 
-    if @account
-      otp = generate_otp
-      @account.email_otps.create!(otp: otp)
+  #   if @account
+  #     otp = generate_otp
+  #     @account.email_otps.create!(otp: otp)
 
-      # Correct method call for sending email OTP
-      MailgunMailer.send_email_otp(@account.email, otp).deliver_now
-      render json: { message: 'OTP sent to email' }, status: :ok
-    else
-      render json: { error: 'Account not found' }, status: :not_found
-    end
-  end
+  #     # Correct method call for sending email OTP
+  #     MailgunMailer.send_email_otp(@account.email, otp).deliver_now
+  #     render json: { message: 'OTP sent to email' }, status: :ok
+  #   else
+  #     render json: { error: 'Account not found' }, status: :not_found
+  #   end
+  # end
 
   def send_sms_otp
     sms_otp_params = params.require(:sms_otp).permit(:full_phone_number)

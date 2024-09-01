@@ -13,11 +13,11 @@ module Api
       end
 
       def create
-        catalogue_variant = CatalogueVariant.new(catalogue_variant_params)
-        if catalogue_variant.save
-          render json: catalogue_variant, status: :created
+       @catalogue_variant = CatalogueVariant.new(catalogue_variant_params)
+        if @catalogue_variant.save
+          render json: @catalogue_variant, status: :created
         else
-          render json: { errors: catalogue_variant.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: @catalogue_variant.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
