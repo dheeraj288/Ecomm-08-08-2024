@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'twilio-ruby'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -32,7 +33,8 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
-    Rails.root.join('spec/fixtures')
+    Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
   ]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -57,6 +59,16 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://rspec.info/features/6-0/rspec-rails
   config.infer_spec_type_from_file_location!
+  RSpec.configure do |config|
+  config.before(:each) do
+    allow_any_instance_of(Twilio::REST::Client).to receive_message_chain(:messages, :create).and_return(true)
+  end
+end
+
+RSpec.configure do |config|
+  # Add FactoryBot methods
+  config.include FactoryBot::Syntax::Methods
+end
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

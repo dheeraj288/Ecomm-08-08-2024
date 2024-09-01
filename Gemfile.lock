@@ -456,7 +456,7 @@ DEPENDENCIES
   rspec-rails
   sassc
   selenium-webdriver
-  shoulda-matchers (~> 5.0)
+  shoulda-matchers
   sprockets-rails
   stimulus-rails
   turbo-rails

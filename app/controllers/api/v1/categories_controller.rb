@@ -41,8 +41,10 @@ module Api
 
       private
 
-      def set_category
+     def set_category
         @category = Category.includes(:sub_categories).find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        render json: { error: "Category not found" }, status: :not_found
       end
 
       def category_params
